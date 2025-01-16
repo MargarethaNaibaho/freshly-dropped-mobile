@@ -77,14 +77,14 @@ flutter:
   fonts:
     - family: Inter
       fonts:
-        - asset: assets/fonts/inter/Inter-Regular.ttf
-        - asset: assets/fonts/inter/Inter-Italic.ttf
+        - asset: assets/fonts/inter/Inter-Regular.otf
+        - asset: assets/fonts/inter/Inter-Italic.otf
           style: italic
           weight: 400
-        - asset: assets/fonts/inter/Inter-LightItalic.ttf
+        - asset: assets/fonts/inter/Inter-LightItalic.otf
           style: italic
           weight: 300
-        - asset: assets/fonts/inter/Inter-Light.ttf
+        - asset: assets/fonts/inter/Inter-Light.otf
           weight: 300
     - family: Poppins
       fonts:
