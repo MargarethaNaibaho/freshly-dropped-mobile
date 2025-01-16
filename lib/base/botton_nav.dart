@@ -45,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           BottomNavigationBarItem(
             icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
             activeIcon: Icon(FluentSystemIcons.ic_fluent_home_regular),
-            label: "Favorites",
+            label: "Home",
           ),
           BottomNavigationBarItem(
             icon: Icon(FluentSystemIcons.ic_fluent_star_regular),

@@ -10,7 +10,18 @@ class InfoScreen extends StatelessWidget {
         title: Text("Info Screen"),
         centerTitle: true,
       ),
-      body: Text("This is info screen"),
+      body: Column(
+        children: [
+          Text(
+            "This is info poppins",
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          Text(
+            "This is info inter",
+          ),
+        ],
+      )
+      
     );
   }
 }
