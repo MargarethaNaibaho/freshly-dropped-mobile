@@ -1,5 +1,6 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:freshy_food/colors.dart';
 import 'package:freshy_food/screens/favorites_screen.dart';
 import 'package:freshy_food/screens/home_screen.dart';
 import 'package:freshy_food/screens/info_screen.dart';
@@ -35,8 +36,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       body: appScreens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 98, 206, 60),
-        selectedItemColor: Color.fromARGB(255, 68, 151, 40),
+        backgroundColor: CustomColors.primaryGreen,
+        selectedItemColor: CustomColors.darkGreen,
         unselectedItemColor: Colors.white,
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
