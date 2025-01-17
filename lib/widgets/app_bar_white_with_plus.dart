@@ -11,11 +11,12 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
+      toolbarHeight: 86,
       title: Row(
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 30),
+              padding: const EdgeInsets.symmetric(vertical: 21),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
