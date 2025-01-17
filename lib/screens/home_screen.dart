@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freshy_food/styles/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: CustomColors.lightGreen,
         title: Text("Home Screen"),
         centerTitle: true,
       ),
