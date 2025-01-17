@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:freshy_food/base/botton_nav.dart';
-import 'package:freshy_food/colors.dart';
-import 'package:freshy_food/screens/home_screen.dart';
+import 'package:freshy_food/styles/colors.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
+import 'package:freshy_food/widgets/app_bar_white_with_plus.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
@@ -12,44 +14,17 @@ class InfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(onPressed: (){
-                      Navigator.pushAndRemoveUntil(
-                        context, 
-                        MaterialPageRoute(builder: (context) => BottomNavBar()),
-                        (Route<dynamic> route) => false,
-                        );
-                    }, icon: 
-                      Icon(Icons.keyboard_arrow_left_rounded, size: 40, color: CustomColors.lightGreen),
-                    ),
-                    Text(
-                      "Info",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 24,
-                        color: CustomColors.primaryGreen
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: Icon(Icons.add, size: 40, color: CustomColors.lightGreen,),),
-                  ],
-                ),
-              )
-            ),
-          ],
-        ),
-        centerTitle: true,
+      appBar: AppBarWhiteWithPlus(linkBack: (context){
+        Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
+            (Route<dynamic> route) => false,
+          );
+        },
+        linkAdd: (){
+          log("Hello ini tombol tambah diklik");
+        }, 
+        title: "Info"
       ),
       body: ListView(
         children: [

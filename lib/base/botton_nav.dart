@@ -1,6 +1,6 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:freshy_food/colors.dart';
+import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/screens/favorites_screen.dart';
 import 'package:freshy_food/screens/home_screen.dart';
 import 'package:freshy_food/screens/info_screen.dart';
