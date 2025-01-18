@@ -163,6 +163,28 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            top: MediaQuery.of(context).size.height / 2 + 140,
+            child: SizedBox(
+              width: 80,
+              height: 80,
+              child: FloatingActionButton(
+                backgroundColor: CustomColors.primaryGreen,
+                onPressed: (){},
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                tooltip: "Chat",
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 20),
+                  child: Icon(FluentSystemIcons.ic_fluent_chat_filled, size: 41, color: Colors.white,),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
