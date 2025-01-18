@@ -7,6 +7,8 @@ class CustomColors{
 
   static const Color primaryGrey = Color(0xFF737373);
   static const Color lightGrey = Color(0xFFB9B9B9);
+  static const Color lighGrey2 = Color(0xFF9AA298);
   static const Color cardGrey = Color(0xFFEEEEEE);
   static const Color searchGrey = Color(0xFFC3BFBF);
+  static const Color starGray = Color(0xFFD9D9D9);
 }
