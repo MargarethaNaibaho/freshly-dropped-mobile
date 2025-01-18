@@ -4,7 +4,7 @@ import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
 import 'package:freshy_food/widgets/home_icon.dart';
-import 'package:freshy_food/widgets/single_hottest_recipe.dart';
+import 'package:freshy_food/widgets/single_card_half_recipe.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -93,9 +93,9 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SingleHottestRecipe(hottestRecipe: hottestRecipes[0]),
+                  SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0]),
                   const SizedBox(width: 19,),
-                  SingleHottestRecipe(hottestRecipe: hottestRecipes[1]),
+                  SingleCardHalfRecipe(hottestRecipe: hottestRecipes[1]),
                 ],
               )
             ],

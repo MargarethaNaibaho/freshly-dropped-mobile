@@ -1,6 +1,7 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:freshy_food/styles/colors.dart';
+import 'package:freshy_food/widgets/single_card_half_recipe.dart';
 
 class RecipesScreen extends StatefulWidget {
   const RecipesScreen({super.key});
@@ -11,6 +12,33 @@ class RecipesScreen extends StatefulWidget {
 
 class _RecipesScreenState extends State<RecipesScreen>{
   final FocusNode focusNode = FocusNode();
+
+  final List<Map<String, dynamic>> hottestRecipes = const [
+    {
+      'id': 1,
+      'name': 'Pesto Pasta',
+      'calories': 150,
+      'countUserStar': 29,
+      'ingredients': ['Wheat', 'Basil', 'Pine nuts', 'Cheese'],
+      'imagePath': "assets/images/pesto_pasta.png"
+    },
+    {
+      'id': 2,
+      'name': 'Lorem Ipsum',
+      'calories': 150,
+      'countUserStar': 29,
+      'ingredients': ['Lorem', 'Ipsum', 'Dolor'],
+      'imagePath': "assets/images/pesto_pasta.png"
+    },
+    {
+      'id': 3,
+      'name': 'Lorem Syay',
+      'calories': 150,
+      'countUserStar': 29,
+      'ingredients': ['Lorem', 'Ipsum', 'Dolor'],
+      'imagePath': "assets/images/pesto_pasta.png"
+    },
+  ];
 
   @override
   void dispose(){
@@ -90,7 +118,31 @@ class _RecipesScreenState extends State<RecipesScreen>{
           ),
         ),
       ),
-      body: Text("This is my list screen"),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
+                  const SizedBox(width: 19,),
+                  SingleCardHalfRecipe(hottestRecipe: hottestRecipes[1], isSvg: true,)
+                ],
+              ),
+              const SizedBox(height: 24,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
