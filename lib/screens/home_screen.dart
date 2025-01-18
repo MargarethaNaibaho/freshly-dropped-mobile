@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
+import 'package:freshy_food/widgets/home_icon.dart';
+import 'package:freshy_food/widgets/single_hottest_recipe.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -91,153 +93,9 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                            offset: Offset(4, 4),
-                            blurRadius: 4
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(hottestRecipes[0]['imagePath']),
-                                    fit: BoxFit.cover //ini supaya ikutin width height si container parent yg bungkus ini
-                                  ),
-                                ),
-                                height: 100,
-                              ),
-                            ),
-                            const SizedBox(height: 5,),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Pesto Pasta", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),),
-                                      Row(
-                                        children: [
-                                          Image.asset("assets/images/other_icons/chili.png", width: 16,),
-                                          Image.asset("assets/images/other_icons/shrimp.png", width: 16,)
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Text("Wheat, Basil, Pine nuts, Cheese", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_half_filled, color: CustomColors.starGray, size: 12,),
-                                            ],
-                                          ),
-                                          Text("(29)",  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),)
-                                        ],
-                                      ),
-                                      Text("150 kcal", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),)
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  SingleHottestRecipe(hottestRecipe: hottestRecipes[0]),
                   const SizedBox(width: 19,),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                            offset: Offset(4, 4),
-                            blurRadius: 4
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(hottestRecipes[0]['imagePath']),
-                                    fit: BoxFit.cover //ini supaya ikutin width height si container parent yg bungkus ini
-                                  ),
-                                ),
-                                height: 100,
-                              ),
-                            ),
-                            const SizedBox(height: 5,),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Pesto Pasta", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),),
-                                      Row(
-                                        children: [
-                                          Image.asset("assets/images/other_icons/chili.png", width: 16,),
-                                          Image.asset("assets/images/other_icons/shrimp.png", width: 16,)
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Text("Wheat, Basil, Pine nuts, Cheese", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.starGray, size: 12,),
-                                              Icon(FluentSystemIcons.ic_fluent_star_half_filled, color: CustomColors.starGray, size: 12,),
-                                            ],
-                                          ),
-                                          Text("(29)",  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),)
-                                        ],
-                                      ),
-                                      Text("150 kcal", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),)
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  SingleHottestRecipe(hottestRecipe: hottestRecipes[1]),
                 ],
               )
             ],
@@ -264,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                             spreadRadius: 4,
                           ),
                         ],
-                        image: DecorationImage(image: AssetImage("assets/images/male_chef.png"), fit: BoxFit.cover)
+                        image: DecorationImage(image: AssetImage(ImagePath.maleChef), fit: BoxFit.cover)
                       ),
                     )
                   ),
@@ -272,6 +130,37 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 15,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Select Recipe", style: TextStyles.titleStyle1,),
+              const SizedBox(height: 16,),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      HomeIcon(title: "Breakfasts", linkImage: ImagePath.breakfasts),
+                      HomeIcon(title: "Dessert", linkImage: ImagePath.dessert),
+                      HomeIcon(title: "Appetisers", linkImage: ImagePath.appetisers),
+                      HomeIcon(title: "Lunch", linkImage: ImagePath.lunch),
+                    ],
+                  ),
+                  const SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      HomeIcon(title: "Supper", linkImage: ImagePath.supper),
+                      HomeIcon(title: "Dinner", linkImage: ImagePath.dinner),
+                      HomeIcon(title: "Diet", linkImage: ImagePath.diet),
+                      HomeIcon(title: "All", linkImage: ImagePath.all),
+                    ],
+                  )
+                ],
+              )
+            ],
+          )
         ],
       ),
     );
