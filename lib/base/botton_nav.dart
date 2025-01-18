@@ -4,7 +4,7 @@ import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/screens/favorites_screen.dart';
 import 'package:freshy_food/screens/home_screen.dart';
 import 'package:freshy_food/screens/info_screen.dart';
-import 'package:freshy_food/screens/my_list.dart';
+import 'package:freshy_food/screens/recipes_screen.dart';
 import 'package:freshy_food/screens/profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -18,7 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final appScreens = [
     HomeScreen(),
     FavoritesScreen(),
-    MyListScreen(),
+    RecipesScreen(),
     InfoScreen(),
     ProfileScreen(),
   ];

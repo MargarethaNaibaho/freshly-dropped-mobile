@@ -21,9 +21,8 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(onPressed: () => linkBack(context),
-                    icon: 
-                    Icon(Icons.keyboard_arrow_left_rounded, size: 40, color: CustomColors.lightGreen),
+                  GestureDetector(onTap: () => linkBack(context),
+                    child: Icon(Icons.keyboard_arrow_left_rounded, size: 40, color: CustomColors.lightGreen),
                   ),
                   Text(
                     "Info",
@@ -33,9 +32,10 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
                       color: CustomColors.primaryGreen
                     ),
                   ),
-                  IconButton(
-                    onPressed: linkAdd, 
-                    icon: Icon(Icons.add, size: 40, color: CustomColors.lightGreen,),),
+                  GestureDetector(
+                    onTap: linkAdd, 
+                    child: Icon(Icons.add, size: 40, color: CustomColors.lightGreen,),
+                  ),
                 ],
               ),
             )
@@ -47,5 +47,5 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(86);
 }
