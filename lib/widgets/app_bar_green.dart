@@ -13,6 +13,7 @@ class AppBarGreen extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: CustomColors.lightGreen,
       toolbarHeight: 86,
       title: Container(

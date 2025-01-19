@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       'calories': 150,
       'countUserStar': 29,
       'ingredients': ['Wheat', 'Basil', 'Pine nuts', 'Cheese'],
-      'imagePath': "assets/images/pesto_pasta.png"
+      'imagePath': "assets/images/pesto_pasta.png",
     },
     {
       'id': 2,
