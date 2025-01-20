@@ -1,4 +1,3 @@
-import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:freshy_food/styles/colors.dart';

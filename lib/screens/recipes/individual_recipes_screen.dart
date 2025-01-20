@@ -1,13 +1,14 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:freshy_food/modoels/recipe_detail_model.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
 import 'package:freshy_food/widgets/app_bar_green.dart';
 
 class IndividualRecipesScreen extends StatefulWidget {
-  const IndividualRecipesScreen({super.key, required this.recipe});
-  final Map<String, dynamic> recipe;
+  const IndividualRecipesScreen({super.key, required this.id});
+  final int id;
 
   @override
   State<IndividualRecipesScreen> createState() => _IndividualRecipesScreenState();
@@ -17,6 +18,12 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
   final FocusNode focusNode = FocusNode();
   int _counter = 1;
   bool _isChecked = false;
+
+  late RecipeDetailModel recipe;
+  String nutritionsText = '';
+  String recipeName = '';
+  String countriesText = '';
+  String mealTypesText = '';
   
   void _incrementCounter(){
     setState(() {
@@ -30,6 +37,24 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
         _counter--;
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    recipe = RecipeDetailModel.recipes.firstWhere((r) => r.id == widget.id);
+
+    nutritionsText = recipe.nutritions.join(', ');
+    countriesText = recipe.countries.join(', ');
+    mealTypesText = recipe.mealType.join(', ');
+
+    if(nutritionsText.length > 20){
+      nutritionsText = '${nutritionsText.substring(0, 20)}...';
+    }
+
+    if(recipe.name.length > 20){
+      recipeName = '${recipe.name.substring(0, 20)}...';
+    }
   }
 
   @override
@@ -57,7 +82,7 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 32,),
-                Center(child: Image(image: AssetImage(widget.recipe['imageDetailPath']), height: 334,)),
+                Center(child: Image(image: AssetImage(recipe.urlImageDetail), height: 334,)),
                 const SizedBox(height: 12,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +90,7 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(widget.recipe['name'], style: TextStyles.titleStyle1,),
+                        Text(recipe.name, style: TextStyles.titleStyle1,),
                         const SizedBox(width: 9,),
                         SizedBox(
                           height: 26,
@@ -102,11 +127,11 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                       ],
                     ),
                     const SizedBox(width: 8,),
-                    Text("(${widget.recipe['countUserStar']})", style: TextStyle(fontSize: 16, color: CustomColors.primaryGrey),)
+                    Text("(${recipe.countUserStar})", style: TextStyle(fontSize: 16, color: CustomColors.primaryGrey),)
                   ],
                 ),
                 const SizedBox(height: 32,),
-                Text("Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", style: TextStyles.descriptionStyle1),
+                Text(recipe.description, style: TextStyles.descriptionStyle1),
                 const SizedBox(height: 15,),
                 Row(
                   children: [
@@ -115,7 +140,7 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Image.asset(ImagePath.knifeFork, height: 23,),
-                        Text("Lunch, dinner", style: TextStyles.descriptionStyle1,),
+                        Text(mealTypesText, style: TextStyles.descriptionStyle1,),
                       ],
                     ),
                     const SizedBox(width: 8,),
@@ -124,7 +149,7 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Image.asset(ImagePath.globe, height: 23,),
-                        Text("Italian", style: TextStyles.descriptionStyle1,),
+                        Text(countriesText, style: TextStyles.descriptionStyle1,),
                       ],
                     ),
                   ],
@@ -196,31 +221,38 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start  ,
                   children: [
-                    SizedBox(
-                      width: 24,
-                      child: Checkbox(
-                        value: _isChecked, 
-                        onChanged: (bool? newValue){
-                          setState(() {
-                            _isChecked = newValue!;
-                          });
-                        },
-                        activeColor: CustomColors.primaryGreen,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(
-                            color: _isChecked ? CustomColors.primaryGreen : CustomColors.cardGrey
-                          )
-                        ),
+                    for(var ingredient in recipe.ingredients)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 24,
+                            height: 30,
+                            child: Checkbox(
+                              value: _isChecked, 
+                              onChanged: (bool? newValue){
+                                setState(() {
+                                  _isChecked = newValue!;
+                                });
+                              },
+                              activeColor: CustomColors.primaryGreen,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(
+                                  color: _isChecked ? CustomColors.primaryGreen : CustomColors.cardGrey
+                                )
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 8), 
+                            child: Text(ingredient, style: TextStyles.descriptionStyle1,)),
+                        ],
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 8), 
-                      child: Text("100g spaghetti", style: TextStyles.descriptionStyle1,)),
                   ],
                 ),
               ],

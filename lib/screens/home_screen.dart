@@ -1,5 +1,6 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:freshy_food/modoels/recipe_overview_model.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
@@ -9,29 +10,12 @@ import 'package:freshy_food/widgets/single_card_half_recipe.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  final List<Map<String, dynamic>> hottestRecipes = const [
-    {
-      'id': 1,
-      'name': 'Pesto Pasta',
-      'calories': 150,
-      'countUserStar': 29,
-      'ingredients': ['Wheat', 'Basil', 'Pine nuts', 'Cheese'],
-      'imagePath': "assets/images/pesto_pasta.png",
-      'imageDetailPath': "assets/images/pesto_pasta_detail.png",
-    },
-    {
-      'id': 2,
-      'name': 'Lorem Ipsum',
-      'calories': 150,
-      'countUserStar': 29,
-      'ingredients': ['Lorem', 'Ipsum', 'Dolor'],
-      'imagePath': "assets/images/pesto_pasta.png",
-      'imageDetailPath': "assets/images/pesto_pasta_detail.png",
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<RecipeOverviewModel> hottestRecipes = [
+      RecipeOverviewModel.recipes[0], RecipeOverviewModel.recipes[1]
+    ];
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

@@ -1,23 +1,34 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:freshy_food/modoels/recipe_overview_model.dart';
 import 'package:freshy_food/screens/recipes/individual_recipes_screen.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 
 class SingleCardHalfRecipe extends StatelessWidget {
   const SingleCardHalfRecipe({super.key, required this.hottestRecipe, this.isSvg = false});
-  final Map<String, dynamic> hottestRecipe;
+  final RecipeOverviewModel hottestRecipe;
   final bool isSvg;
 
   @override
   Widget build(BuildContext context) {
     double widthForCard = MediaQuery.of(context).size.width / 2 - 36;
+    String nutritionsText = hottestRecipe.nutritions.join(', ');
+    String recipeName = hottestRecipe.name;
+
+    if(nutritionsText.length > 20){
+      nutritionsText = '${nutritionsText.substring(0, 20)}...';
+    }
+
+    if(hottestRecipe.name.length > 12){
+      recipeName = '${hottestRecipe.name.substring(0, 12)}...';
+    }
 
     return GestureDetector(
       onTap: (){
         Navigator.push(
           context, 
-          MaterialPageRoute(builder: (context) => IndividualRecipesScreen(recipe: hottestRecipe,)));
+          MaterialPageRoute(builder: (context) => IndividualRecipesScreen(id: hottestRecipe.id,)));
       },
       child: Container(
         width: widthForCard,
@@ -39,7 +50,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
                 child: Container(
                     decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(hottestRecipe['imagePath']),
+                      image: AssetImage(hottestRecipe.urlImageThumbnail),
                       fit: BoxFit.cover //ini supaya ikutin width height si container parent yg bungkus ini
                     ),
                   ),
@@ -55,7 +66,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Pesto Pasta", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),),
+                        Text(recipeName, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),),
                         Row(
                           children: [
                             Image.asset(ImagePath.chili, width: 16,),
@@ -64,7 +75,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text("Wheat, Basil, Pine nuts, Cheese", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),),
+                    Text(nutritionsText, style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -79,10 +90,10 @@ class SingleCardHalfRecipe extends StatelessWidget {
                                 Icon(FluentSystemIcons.ic_fluent_star_half_filled, color: CustomColors.starGray, size: 12,),
                               ],
                             ),
-                            Text("(29)",  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),)
+                            Text("(${hottestRecipe.countUserStar})",  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),)
                           ],
                         ),
-                        Text("150 kcal${isSvg ? "/svg" : ""}", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),),
+                        Text("${hottestRecipe.calories} kcal${isSvg ? "/svg" : ""}", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),),
                       ],
                     ),
                     const SizedBox(height: 9,)
