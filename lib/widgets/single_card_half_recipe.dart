@@ -82,9 +82,10 @@ class SingleCardHalfRecipe extends StatelessWidget {
                             Text("(29)",  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11, fontStyle: FontStyle.italic, color: CustomColors.lighGrey2),)
                           ],
                         ),
-                        Text("150 kcal${isSvg ? "/svg" : ""}", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),)
+                        Text("150 kcal${isSvg ? "/svg" : ""}", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),),
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 9,)
                   ],
                 ),
               ),
