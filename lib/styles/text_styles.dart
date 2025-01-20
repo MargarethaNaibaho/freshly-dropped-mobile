@@ -7,5 +7,20 @@ class TextStyles {
     fontFamily: 'Poppins',
   );
 
-  static TextStyle descriptionStyle1 = TextStyle(color: CustomColors.primaryGrey, fontSize: 16, height: 1);
+  static TextStyle titleStyle2 = TextStyle(
+    fontSize: 16,
+    fontFamily: 'Poppins',
+  );
+
+  static TextStyle descriptionStyle1 = TextStyle(
+    color: CustomColors.primaryGrey, 
+    fontSize: 16, 
+    height: 1
+  );
+  
+  static TextStyle descriptionStyle2 = TextStyle(
+    color: CustomColors.primaryGrey, 
+    fontSize: 12, 
+    height: 1
+  );
 }

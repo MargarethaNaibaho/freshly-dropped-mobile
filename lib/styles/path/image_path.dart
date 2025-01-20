@@ -19,4 +19,6 @@ class ImagePath {
 
   static const globe = "$baseImage/other_icons/globe.png";
   static const knifeFork = "$baseImage/other_icons/knife_fork.png";
+
+  static const rubbish = "$baseImage/other_icons/rubbish.png";
 }

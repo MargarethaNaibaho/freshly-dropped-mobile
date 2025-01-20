@@ -12,5 +12,7 @@ class CustomColors{
   static const Color searchGrey = Color(0xFFC3BFBF);
   static const Color starGray = Color(0xFFD9D9D9);
 
-  static const Color lightOrange = Color(0x52f1DB14);
+  static const Color lightOrange = Color(0xFFEFE8A8);
+
+  static const Color dismissRed = Color(0xFFF25F5F);
 }
