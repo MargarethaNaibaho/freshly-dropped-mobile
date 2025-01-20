@@ -25,7 +25,7 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
                     child: Icon(Icons.keyboard_arrow_left_rounded, size: 40, color: CustomColors.lightGreen),
                   ),
                   Text(
-                    "Info",
+                    title,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 24,
