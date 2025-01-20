@@ -11,4 +11,6 @@ class CustomColors{
   static const Color cardGrey = Color(0xFFEEEEEE);
   static const Color searchGrey = Color(0xFFC3BFBF);
   static const Color starGray = Color(0xFFD9D9D9);
+
+  static const Color lightOrange = Color(0x52f1DB14);
 }

@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
       'countUserStar': 29,
       'ingredients': ['Wheat', 'Basil', 'Pine nuts', 'Cheese'],
       'imagePath': "assets/images/pesto_pasta.png",
+      'imageDetailPath': "assets/images/pesto_pasta_detail.png",
     },
     {
       'id': 2,
@@ -24,7 +25,8 @@ class HomeScreen extends StatelessWidget {
       'calories': 150,
       'countUserStar': 29,
       'ingredients': ['Lorem', 'Ipsum', 'Dolor'],
-      'imagePath': "assets/images/pesto_pasta.png"
+      'imagePath': "assets/images/pesto_pasta.png",
+      'imageDetailPath': "assets/images/pesto_pasta_detail.png",
     },
   ];
 

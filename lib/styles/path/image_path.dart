@@ -13,4 +13,10 @@ class ImagePath {
 
   static const maleChef = "$baseImage/male_chef.png";
   static const pestoPasta = "$baseImage/pesto_pasta.png";
+
+  static const chili = "$baseImage/other_icons/chili.png";
+  static const shrimp = "$baseImage/other_icons/shrimp.png";
+
+  static const globe = "$baseImage/other_icons/globe.png";
+  static const knifeFork = "$baseImage/other_icons/knife_fork.png";
 }

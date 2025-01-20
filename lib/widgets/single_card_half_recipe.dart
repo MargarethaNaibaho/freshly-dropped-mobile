@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:freshy_food/screens/recipes/individual_recipes_screen.dart';
 import 'package:freshy_food/styles/colors.dart';
+import 'package:freshy_food/styles/path/image_path.dart';
 
 class SingleCardHalfRecipe extends StatelessWidget {
   const SingleCardHalfRecipe({super.key, required this.hottestRecipe, this.isSvg = false});
@@ -57,8 +58,8 @@ class SingleCardHalfRecipe extends StatelessWidget {
                         Text("Pesto Pasta", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),),
                         Row(
                           children: [
-                            Image.asset("assets/images/other_icons/chili.png", width: 16,),
-                            Image.asset("assets/images/other_icons/shrimp.png", width: 16,)
+                            Image.asset(ImagePath.chili, width: 16,),
+                            Image.asset(ImagePath.shrimp, width: 16,)
                           ],
                         )
                       ],
