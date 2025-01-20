@@ -21,4 +21,11 @@ class ImagePath {
   static const knifeFork = "$baseImage/other_icons/knife_fork.png";
 
   static const rubbish = "$baseImage/other_icons/rubbish.png";
+
+  static const homeNav = "$baseImage/icon_navbar/home.svg";
+  static const infoNav = "$baseImage/icon_navbar/info.svg";
+  static const profileNav = "$baseImage/icon_navbar/profile.svg";
+  static const recipeNav = "$baseImage/icon_navbar/recipes.svg";
+  static const starNav = "$baseImage/icon_navbar/star.svg";
+  static const starFilledNav = "$baseImage/icon_navbar/star_filled.svg";
 }

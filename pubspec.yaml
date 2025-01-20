@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   fluentui_icons: ^1.0.0
   font_awesome_flutter: ^10.8.0
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/other_icons/
+    - assets/images/icon_navbar/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

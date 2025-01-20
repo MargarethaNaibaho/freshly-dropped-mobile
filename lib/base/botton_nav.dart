@@ -1,11 +1,13 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/screens/favorites_screen.dart';
 import 'package:freshy_food/screens/home_screen.dart';
 import 'package:freshy_food/screens/info_screen.dart';
 import 'package:freshy_food/screens/recipes_screen.dart';
 import 'package:freshy_food/screens/profile_screen.dart';
+import 'package:freshy_food/styles/path/image_path.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -44,28 +46,28 @@ class _BottomNavBarState extends State<BottomNavBar> {
         iconSize: 24,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
-            activeIcon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+            icon: SvgPicture.asset(ImagePath.homeNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
+            activeIcon: SvgPicture.asset(ImagePath.homeNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FluentSystemIcons.ic_fluent_star_regular),
-            activeIcon: Icon(FluentSystemIcons.ic_fluent_star_regular),
+            icon: SvgPicture.asset(ImagePath.starNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
+            activeIcon: SvgPicture.asset(ImagePath.starFilledNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
             label: "Favorites",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FluentSystemIcons.ic_fluent_text_edit_style_regular),
-            activeIcon: Icon(FluentSystemIcons.ic_fluent_text_edit_style_regular),
+            icon: SvgPicture.asset(ImagePath.recipeNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
+            activeIcon: SvgPicture.asset(ImagePath.recipeNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
             label: "Recipes"
           ),
           BottomNavigationBarItem(
-            icon: Icon(FluentSystemIcons.ic_fluent_info_regular),
-            activeIcon: Icon(FluentSystemIcons.ic_fluent_info_regular),
+            icon: SvgPicture.asset(ImagePath.infoNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
+            activeIcon: SvgPicture.asset(ImagePath.infoNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
             label: "Info"
           ),
           BottomNavigationBarItem(
-            icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
-            activeIcon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+            icon: SvgPicture.asset(ImagePath.profileNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
+            activeIcon: SvgPicture.asset(ImagePath.profileNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
             label: "Profile"
           ),
         ]
