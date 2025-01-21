@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:freshy_food/screens/recipes/individual_recipes_screen.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
@@ -64,99 +65,145 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double widthForOuterCard = MediaQuery.of(context).size.width - 24;
+    return LayoutBuilder(
+      builder: (context, constraints){
+        double widthForOuterCard = constraints.maxWidth - 48;
+        bool isTooSmall = constraints.maxWidth < 600;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBarWhiteWithPlus(linkBack: (context){
-        Navigator.pushAndRemoveUntil(
-          context, 
-          MaterialPageRoute(builder: (context) => BottomAppBar()),
-          (Route<dynamic> route) => false,
-        );
-      }, 
-        linkAdd: (){
-          log("Ini tombol tambah diklik");
-        }, 
-        title: "Favorites"
-      ),
-      body: ListView.builder(
-        itemCount: favoriteRecipes.length,
-        itemBuilder: (context, index){
-          final recipe = favoriteRecipes[index];
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBarWhiteWithPlus(linkBack: (context){
+            Navigator.pushAndRemoveUntil(
+              context, 
+              MaterialPageRoute(builder: (context) => BottomAppBar()),
+              (Route<dynamic> route) => false,
+            );
+          }, 
+            linkAdd: (){
+              log("Ini tombol tambah diklik");
+            }, 
+            title: "Favorites"
+          ),
+          body: SafeArea(
+            minimum: EdgeInsets.zero,
+            child: ListView.builder(
+              itemCount: favoriteRecipes.length,
+              itemBuilder: (context, index){
+                final recipe = favoriteRecipes[index];
 
-          return Dismissible(
-            key: Key(recipe['id'].toString()), 
-            direction: DismissDirection.endToStart,
-            onDismissed: (direction) {
-              setState(() {
-                favoriteRecipes.removeAt(index);
-              });
+                return Dismissible(
+                  key: Key(recipe['id'].toString()), 
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    setState(() {
+                      favoriteRecipes.removeAt(index);
+                    });
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  // margin: const EdgeInsets.symmetric(horizontal: 24, ),
-                  backgroundColor: CustomColors.primaryGreen,
-                  content: Text("${recipe['name']} dihapus dari favoritmu", style: TextStyle(fontSize: 16, color: Colors.white),),
-                  duration: const Duration(seconds: 4),
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
-            },
-            background: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              alignment: Alignment.centerRight,
-              color: CustomColors.dismissRed,
-              child: Image.asset(ImagePath.rubbish, width: 32,),
-            ),
-            child: Container(
-              margin: const EdgeInsets.only(left: 24, bottom: 20),
-              width: willBeDeleted ? widthForOuterCard : widthForOuterCard - 24,
-              height: 112,
-              decoration: BoxDecoration(
-                color: CustomColors.cardGrey,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: widthForOuterCard - 168,
-                    padding: const EdgeInsets.fromLTRB(16, 10, 0, 13),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(recipe['name'], style: TextStyles.titleStyle2,),
-                        const SizedBox(height: 8,),
-                        Text(recipe['description'], style: TextStyles.descriptionStyle2,),
-                        const SizedBox(height: 4,),
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.lightOrange, size: 24,),
-                                Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.lightOrange, size: 24,),
-                                Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.lightOrange, size: 24,),
-                                Icon(FluentSystemIcons.ic_fluent_star_filled, color: CustomColors.lightOrange, size: 24,),
-                                Icon(FluentSystemIcons.ic_fluent_star_half_filled, color: CustomColors.lightOrange, size: 24,),
-                              ]
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: CustomColors.primaryGreen,
+                        content: Text(
+                          "${recipe['name']} dihapus dari favoritmu", 
+                          style: TextStyle(
+                            fontSize: 16 * MediaQuery.textScalerOf(context).scale(1), 
+                            color: Colors.white
+                          ),
+                        ),
+                        duration: const Duration(seconds: 4),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  },
+                  background: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 28),
+                    alignment: Alignment.centerRight,
+                    color: CustomColors.dismissRed,
+                    child: Image.asset(ImagePath.rubbish, width: 32,),
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 24, bottom: 20, right: 24),
+                    width: widthForOuterCard,
+                    height: 112,
+                    decoration: BoxDecoration(
+                      color: CustomColors.cardGrey,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => IndividualRecipesScreen(id: recipe['id'])
+                          )
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Container(
+                              width: widthForOuterCard - 144,
+                              padding: const EdgeInsets.fromLTRB(16, 10, 0, 13),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(recipe['name'], style: TextStyles.titleStyle2(context),),
+                                  const SizedBox(height: 8,),
+                                  Text(recipe['description'], style: TextStyles.descriptionStyle2(context),),
+                                  const SizedBox(height: 4,),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            FluentSystemIcons.ic_fluent_star_filled, 
+                                            color: CustomColors.lightOrange, 
+                                            size: isTooSmall ? 16 : 24,
+                                          ),
+                                          Icon(
+                                            FluentSystemIcons.ic_fluent_star_filled, 
+                                            color: CustomColors.lightOrange, 
+                                            size: isTooSmall ? 16 : 24,
+                                          ),
+                                          Icon(
+                                            FluentSystemIcons.ic_fluent_star_filled, 
+                                            color: CustomColors.lightOrange, 
+                                            size: isTooSmall ? 16 : 24,
+                                          ),
+                                          Icon(
+                                            FluentSystemIcons.ic_fluent_star_filled, 
+                                            color: CustomColors.lightOrange, 
+                                            size: isTooSmall ? 16 : 24,
+                                          ),
+                                          Icon(
+                                            FluentSystemIcons.ic_fluent_star_half_filled, 
+                                            color: CustomColors.lightOrange, 
+                                            size: isTooSmall ? 16 : 24,
+                                          ),
+                                        ]
+                                      ),
+                                      Text("(${recipe['countUserStar']})", style: TextStyles.descriptionStyle2(context),),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                            Text("(${recipe['countUserStar']})", style: TextStyles.descriptionStyle2,),
-                          ],
-                        )
-                      ],
+                          ),
+                          const SizedBox(width: 25,),
+                          Container(
+                            margin: const EdgeInsets.only(right: 13),
+                            child: Image.asset(recipe['imagePath'], height: 106, width: 106,),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 25,),
-                  Container(
-                    margin: const EdgeInsets.only(right: 13),
-                    child: Image.asset(recipe['imagePath'], height: 106, width: 106,),
-                  ),
-                ],
-              ),
+                );
+              }
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }
     );
   }
 }
