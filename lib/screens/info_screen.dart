@@ -68,7 +68,11 @@ class InfoScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(FluentSystemIcons.ic_fluent_phone_regular, size: 23, color: CustomColors.primaryGrey,),
+                        Icon(
+                          FluentSystemIcons.ic_fluent_phone_regular, 
+                          size: 23, 
+                          color: CustomColors.primaryGrey,
+                        ),
                         const SizedBox(width: 5,),
                         Text(
                           "+1 234 567 890",

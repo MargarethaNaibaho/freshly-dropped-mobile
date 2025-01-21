@@ -172,7 +172,9 @@ class HomeScreen extends StatelessWidget {
           Positioned(
             right: 0,
             // top: MediaQuery.sizeOf(context).height * 0.65,
-            bottom: MediaQuery.sizeOf(context).height > 360 ? MediaQuery.sizeOf(context).height * 0.1 : MediaQuery.of(context).padding.bottom,
+            bottom: MediaQuery.sizeOf(context).height > 360 
+              ? MediaQuery.sizeOf(context).height * 0.1 
+              : MediaQuery.of(context).padding.bottom,
             child: SizedBox(
               width: 80,
               height: 80,

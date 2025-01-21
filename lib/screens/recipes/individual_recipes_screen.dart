@@ -47,14 +47,6 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
     nutritionsText = recipe.nutritions.join(', ');
     countriesText = recipe.countries.join(', ');
     mealTypesText = recipe.mealType.join(', ');
-
-    if(nutritionsText.length > 20){
-      nutritionsText = '${nutritionsText.substring(0, 20)}...';
-    }
-
-    if(recipe.name.length > 20){
-      recipeName = '${recipe.name.substring(0, 20)}...';
-    }
   }
 
   @override
@@ -214,7 +206,11 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: CustomColors.lightGrey, width: 1),
                               ),
-                              child: Icon(Icons.remove, size: 24, color: CustomColors.lightGrey,),
+                              child: Icon(
+                                Icons.remove, 
+                                size: 24, 
+                                color: CustomColors.lightGrey,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -239,7 +235,11 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(color: CustomColors.lightGrey, width: 1),
                               ),
-                              child: Icon(Icons.add, size: 24, color: CustomColors.lightGrey,),
+                              child: Icon(
+                                Icons.add, 
+                                size: 24, 
+                                color: CustomColors.lightGrey,
+                              ),
                             ),
                           ),
                         ],
