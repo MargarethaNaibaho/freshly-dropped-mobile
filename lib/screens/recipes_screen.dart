@@ -31,38 +31,41 @@ class _RecipesScreenState extends State<RecipesScreen>{
             (Route<dynamic> route) => false,
           );
       }, linkRight: (){}, focusNode: focusNode),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        children: [
-          Wrap(
-            spacing: 19,
-            runSpacing: 24,
-            children: [
-              for(var recipe in RecipeOverviewModel.recipes)
-                SingleCardHalfRecipe(hottestRecipe: recipe, isSvg: true,),
-            ],
-          )
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       children: [
-          //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
-          //         const SizedBox(width: 19,),
-          //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[1], isSvg: true,)
-          //       ],
-          //     ),
-          //     const SizedBox(height: 24,),
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       children: [
-          //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
-          //       ],
-          //     ),
-          //   ],
-          // )
-        ],
+      body: SafeArea(
+        minimum: EdgeInsets.zero,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          children: [
+            Wrap(
+              spacing: 19,
+              runSpacing: 24,
+              children: [
+                for(var recipe in RecipeOverviewModel.recipes)
+                  SingleCardHalfRecipe(hottestRecipe: recipe, isSvg: true,),
+              ],
+            )
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: [
+            //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
+            //         const SizedBox(width: 19,),
+            //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[1], isSvg: true,)
+            //       ],
+            //     ),
+            //     const SizedBox(height: 24,),
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: [
+            //         SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0], isSvg: true,),
+            //       ],
+            //     ),
+            //   ],
+            // )
+          ],
+        ),
       ),
     );
   }

@@ -45,28 +45,68 @@ class _BottomNavBarState extends State<BottomNavBar> {
         iconSize: 24,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(ImagePath.homeNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
-            activeIcon: SvgPicture.asset(ImagePath.homeNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
+            icon: SvgPicture.asset(
+              ImagePath.homeNav, 
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), 
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              ImagePath.homeNav, 
+              colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), 
+              height: 24,
+            ),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(ImagePath.starNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
-            activeIcon: SvgPicture.asset(ImagePath.starFilledNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
+            icon: SvgPicture.asset(
+              ImagePath.starNav, 
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), 
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              ImagePath.starFilledNav, 
+              colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), 
+              height: 24,
+            ),
             label: "Favorites",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(ImagePath.recipeNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
-            activeIcon: SvgPicture.asset(ImagePath.recipeNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
+            icon: SvgPicture.asset(
+              ImagePath.recipeNav, 
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), 
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              ImagePath.recipeNav, 
+              colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), 
+              height: 24,
+            ),
             label: "Recipes"
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(ImagePath.infoNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
-            activeIcon: SvgPicture.asset(ImagePath.infoNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
+            icon: SvgPicture.asset(
+              ImagePath.infoNav, 
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), 
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              ImagePath.infoNav, 
+              colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), 
+              height: 24,
+            ),
             label: "Info"
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(ImagePath.profileNav, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), height: 24,),
-            activeIcon: SvgPicture.asset(ImagePath.profileNav, colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), height: 24,),
+            icon: SvgPicture.asset(
+              ImagePath.profileNav, 
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn), 
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              ImagePath.profileNav, 
+              colorFilter: ColorFilter.mode(CustomColors.darkGreen, BlendMode.srcIn), 
+              height: 24,
+            ),
             label: "Profile"
           ),
         ]

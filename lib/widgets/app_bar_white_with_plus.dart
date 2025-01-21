@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:freshy_food/styles/colors.dart';
 
 class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget{
-  const AppBarWhiteWithPlus({super.key, required this.linkBack, required this.linkAdd, required this.title});
+  const AppBarWhiteWithPlus({
+    super.key, 
+    required this.linkBack, 
+    required this.linkAdd, 
+    required this.title
+  });
+
   final void Function(BuildContext) linkBack;
   final void Function() linkAdd;
   final String title;
@@ -22,7 +28,11 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(onTap: () => linkBack(context),
-                    child: Icon(Icons.keyboard_arrow_left_rounded, size: 40, color: CustomColors.lightGreen),
+                    child: Icon(
+                      Icons.keyboard_arrow_left_rounded, 
+                      size: 40, 
+                      color: CustomColors.lightGreen
+                    ),
                   ),
                   Text(
                     title,
@@ -34,7 +44,11 @@ class AppBarWhiteWithPlus extends StatelessWidget implements PreferredSizeWidget
                   ),
                   GestureDetector(
                     onTap: linkAdd, 
-                    child: Icon(Icons.add, size: 40, color: CustomColors.lightGreen,),
+                    child: Icon(
+                      Icons.add, 
+                      size: 40, 
+                      color: CustomColors.lightGreen,
+                    ),
                   ),
                 ],
               ),

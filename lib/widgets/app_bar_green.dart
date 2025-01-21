@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:freshy_food/styles/colors.dart';
 
 class AppBarGreen extends StatelessWidget implements PreferredSizeWidget{
-  const AppBarGreen({super.key, required this.linkBack, required this.linkRight, required this.focusNode, this.isCart = false});
+  const AppBarGreen({
+    super.key, 
+    required this.linkBack, 
+    required this.linkRight, 
+    required this.focusNode, 
+    this.isCart = false
+  });
+  
   final void Function(BuildContext) linkBack;
   final void Function() linkRight;
   final bool isCart;

@@ -64,7 +64,7 @@ class RecipeDetailModel {
       urlImageDetail: "assets/images/veggie_pizza.png", 
       description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
       countries: ['UK', 'Indonesian'], 
-      mealType: ['Lunch', 'Dinner', 'Brunch'], 
+      mealType: ['Lunch', 'Dinner', 'Brunch', 'Breakfast'], 
       ingredients: ['100g spaghetti', '1 pinch of salt'], 
       nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
       calories: 300, 
