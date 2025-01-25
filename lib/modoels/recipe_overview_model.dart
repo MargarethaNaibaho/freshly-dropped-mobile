@@ -1,4 +1,5 @@
 class RecipeOverviewModel {
+  final String favoriteId;
   final String recipeId;
   final String recipeName;
   final String description;
@@ -8,6 +9,7 @@ class RecipeOverviewModel {
   final ThumbnailImage thumbnailImage;
 
   RecipeOverviewModel({
+    this.favoriteId = '',
     required this.recipeId,
     required this.recipeName,
     required this.description,
@@ -18,12 +20,13 @@ class RecipeOverviewModel {
   });
 
   factory RecipeOverviewModel.fromJson(Map<String, dynamic> json){
-    var listNutritionsFromJson = json['listNutritions'] as List;
+    var listNutritionsFromJson = json['listNutritions'] as List? ?? [];
     List<Nutrition> listNutritions = listNutritionsFromJson
       .map((nutrition) => Nutrition.fromJson(nutrition))
       .toList();
 
     return RecipeOverviewModel(
+      favoriteId: json['favoriteId'] ?? '',
       recipeId: json['recipeId'], 
       recipeName: json['recipeName'], 
       description: json['description'], 
