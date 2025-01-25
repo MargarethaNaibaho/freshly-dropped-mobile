@@ -3,11 +3,14 @@ import 'dart:developer';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:freshy_food/modoels/recipe_detail_model.dart';
+import 'package:freshy_food/services/favorite_service.dart';
 import 'package:freshy_food/services/recipe_service.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
 import 'package:freshy_food/widgets/app_bar_green.dart';
+
+import 'package:flutter_svg/svg.dart';
 
 class IndividualRecipesScreen extends StatefulWidget {
   final String id;
@@ -22,12 +25,38 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
   int _counter = 1;
   bool _isChecked = false;
 
+  bool isFavorite = false;
+  final FavoriteService _favoriteService = FavoriteService();
+
   late Future<RecipeDetailModel> _recipeDetail;
 
   @override
   void initState() {
     super.initState();
     _recipeDetail = RecipeService().getRecipeById(widget.id);
+    _checkFavoriteStatus();
+  }
+
+  void _checkFavoriteStatus() async{
+    bool favoriteStatus = await _favoriteService.isFavorite(widget.id);
+    setState(() {
+      isFavorite = favoriteStatus;
+    });
+  }
+
+  void toggleFavorite() async{
+    try{
+      await _favoriteService.toggleFavorite(widget.id);
+      setState(() {
+        isFavorite = !isFavorite;
+      });
+    } catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(
+          "Error: Unable to toggle favorite status"
+        )),
+      );
+    }
   }
   
   void _incrementCounter(){
@@ -121,12 +150,22 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: (){},
-                                  child: Image.asset("assets/images/other_icons/upload.png", height: 24,)
+                                  child: SvgPicture.asset(
+                                    "assets/images/other_icons/upload_svg.svg", 
+                                    colorFilter: ColorFilter.mode(CustomColors.primaryGrey, BlendMode.srcIn),
+                                    height: 24,
+                                  )
                                 ),
                                 const SizedBox(width: 25.8,),
                                 GestureDetector(
-                                  onTap: (){},
-                                  child: Image.asset("assets/images/other_icons/love.png", height: 24,)
+                                  onTap: toggleFavorite,
+                                  child: SvgPicture.asset(
+                                    isFavorite 
+                                    ? "assets/images/other_icons/love_filled.svg"
+                                    : "assets/images/other_icons/love_regular.svg", 
+                                    colorFilter: ColorFilter.mode(CustomColors.primaryGrey, BlendMode.srcIn),
+                                    height: 24,
+                                  )
                                 ),
                               ],
                             ),
