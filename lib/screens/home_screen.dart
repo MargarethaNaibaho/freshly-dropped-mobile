@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:freshy_food/modoels/recipe_overview_model.dart';
+import 'package:freshy_food/services/recipe_service.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
@@ -14,9 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<RecipeOverviewModel> hottestRecipes = [
-      RecipeOverviewModel.recipes[0], RecipeOverviewModel.recipes[1]
-    ];
+    final RecipeService recipeService = RecipeService();
     
 
     // bool isTooSmall = MediaQuery.sizeOf(context).width < 600;
@@ -80,91 +79,105 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         minimum: EdgeInsets.zero,
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 13),    
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Hottest Recipes", style: TextStyles.titleStyle1(context),),
-                const SizedBox(height: 16,),
-                Wrap(
-                  children: [
-                    SingleCardHalfRecipe(hottestRecipe: hottestRecipes[0]),
-                    const SizedBox(width: 19,),
-                    SingleCardHalfRecipe(hottestRecipe: hottestRecipes[1]),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(height: 15,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Featured", style: TextStyles.titleStyle1(context),),
-                const SizedBox(height: 16,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 186,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.25),
-                              offset: Offset(4, 4),
-                              blurRadius: 10,
-                              spreadRadius: 4,
-                            ),
-                          ],
-                          image: DecorationImage(
-                            image: AssetImage(
-                              ImagePath.maleChef
-                            ), 
-                            fit: BoxFit.cover
-                          )
-                        ),
+        child: FutureBuilder<List<RecipeOverviewModel>>(
+          future: recipeService.getRecipes(), 
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator(),);
+            } else if(snapshot.hasError){
+              return Center(child: Text('Error: ${snapshot.error}'),);
+            } else if(!snapshot.hasData || snapshot.data!.isEmpty){
+              return Center(child: Text("No recipes available"),);
+            } else{
+              final List<RecipeOverviewModel> hottestRecipe = snapshot.data!.take(2).toList();
+              return ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 13),    
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Hottest Recipes", style: TextStyles.titleStyle1(context),),
+                      const SizedBox(height: 16,),
+                      Wrap(
+                        children: [
+                          SingleCardHalfRecipe(hottestRecipe: hottestRecipe[0]),
+                          const SizedBox(width: 19,),
+                          SingleCardHalfRecipe(hottestRecipe: hottestRecipe[1]),
+                        ],
                       )
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 15,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Select Recipe", style: TextStyles.titleStyle1(context),),
-                const SizedBox(height: 16,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: [
-                        HomeIcon(title: "Breakfasts", linkImage: ImagePath.breakfasts),
-                        HomeIcon(title: "Dessert", linkImage: ImagePath.dessert),
-                        HomeIcon(title: "Appetisers", linkImage: ImagePath.appetisers),
-                        HomeIcon(title: "Lunch", linkImage: ImagePath.lunch),
-                      ],
-                    ),
-                    const SizedBox(height: 15,),
-                    Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: [
-                        HomeIcon(title: "Supper", linkImage: ImagePath.supper),
-                        HomeIcon(title: "Dinner", linkImage: ImagePath.dinner),
-                        HomeIcon(title: "Diet", linkImage: ImagePath.diet),
-                        HomeIcon(title: "All", linkImage: ImagePath.all),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
+                    ],
+                  ),
+                  const SizedBox(height: 15,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Featured", style: TextStyles.titleStyle1(context),),
+                      const SizedBox(height: 16,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 186,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                    offset: Offset(4, 4),
+                                    blurRadius: 10,
+                                    spreadRadius: 4,
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    ImagePath.maleChef
+                                  ), 
+                                  fit: BoxFit.cover
+                                )
+                              ),
+                            )
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Select Recipe", style: TextStyles.titleStyle1(context),),
+                      const SizedBox(height: 16,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            children: [
+                              HomeIcon(title: "Breakfasts", linkImage: ImagePath.breakfasts),
+                              HomeIcon(title: "Dessert", linkImage: ImagePath.dessert),
+                              HomeIcon(title: "Appetisers", linkImage: ImagePath.appetisers),
+                              HomeIcon(title: "Lunch", linkImage: ImagePath.lunch),
+                            ],
+                          ),
+                          const SizedBox(height: 15,),
+                          Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            children: [
+                              HomeIcon(title: "Supper", linkImage: ImagePath.supper),
+                              HomeIcon(title: "Dinner", linkImage: ImagePath.dinner),
+                              HomeIcon(title: "Diet", linkImage: ImagePath.diet),
+                              HomeIcon(title: "All", linkImage: ImagePath.all),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              );
+            }
+          }
         ),
       ),
       floatingActionButton: Stack(

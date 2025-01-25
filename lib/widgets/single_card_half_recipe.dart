@@ -23,20 +23,21 @@ class SingleCardHalfRecipe extends StatelessWidget {
       builder: (context, constraints){
         double widthForCard = constraints.maxWidth / 2 - 10;
 
-        String nutritionsText = hottestRecipe.nutritions.join(', ');
-        String recipeName = hottestRecipe.name;
+        String nutritionsText = hottestRecipe.listNutritions.map((e) => e.toString()).join(', ');
+        log("ini dr hottest recipe langsung nutritionnya: ${hottestRecipe.listNutritions}");
+        String recipeName = hottestRecipe.recipeName;
 
         int dynamicNutritionsText = (constraints.maxWidth / 20).floor();
         int dynamicRecipeName = (constraints.maxWidth / 35).floor();
         log("$dynamicRecipeName");
-        log("$dynamicNutritionsText");
+        log("ini nutritions text $dynamicNutritionsText");
 
         if(nutritionsText.length > dynamicNutritionsText){
           nutritionsText = '${nutritionsText.substring(0, dynamicNutritionsText)}...';
         }
 
-        if(hottestRecipe.name.length > dynamicRecipeName){
-          recipeName = '${hottestRecipe.name.substring(0,dynamicRecipeName)}...';
+        if(hottestRecipe.recipeName.length > dynamicRecipeName){
+          recipeName = '${hottestRecipe.recipeName.substring(0,dynamicRecipeName)}...';
         }
 
         return GestureDetector(
@@ -44,7 +45,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
             Navigator.push(
               context, 
               MaterialPageRoute(
-                builder: (context) => IndividualRecipesScreen(id: hottestRecipe.id,)));
+                builder: (context) => IndividualRecipesScreen(id:1,)));
           },
           child: Container(
             width: widthForCard,
@@ -66,7 +67,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
                   child: Container(
                       decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(hottestRecipe.urlImageThumbnail),
+                        image: NetworkImage(hottestRecipe.thumbnailImage.url),
                         fit: BoxFit.cover //ini supaya ikutin width height si container parent yg bungkus ini
                       ),
                     ),
@@ -159,7 +160,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "${hottestRecipe.calories} kcal${isSvg ? "/svg" : ""}", 
+                              "${hottestRecipe.calorie} kcal${isSvg ? "/svg" : ""}", 
                               style: TextStyle(
                                 fontWeight: FontWeight.w300, 
                                 fontSize: (constraints.maxWidth * 0.025).clamp(8.0, 11.0),
