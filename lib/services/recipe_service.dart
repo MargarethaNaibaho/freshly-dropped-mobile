@@ -1,3 +1,4 @@
+import 'package:freshy_food/modoels/recipe_detail_model.dart';
 import 'package:freshy_food/modoels/recipe_overview_model.dart';
 import 'package:freshy_food/services/api_service.dart';
 
@@ -16,6 +17,20 @@ class RecipeService {
       }
     } catch(e){
         rethrow;
+    }
+  }
+
+  Future<RecipeDetailModel> getRecipeById(String recipeId) async{
+    try{
+      final response = await _apiService.get('recipe/$recipeId');
+      // log("berhasil sentuh recipe service");
+      if(response['statusCode'] == 200){
+        return RecipeDetailModel.fromJson(response['data']);
+      } else {
+        throw Exception("Failed to load recipe by id");
+      }
+    } catch(e){
+      rethrow;
     }
   }
 }

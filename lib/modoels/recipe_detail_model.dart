@@ -1,116 +1,141 @@
+import 'dart:developer';
+
+import 'package:freshy_food/modoels/recipe_overview_model.dart';
+
 class RecipeDetailModel {
-  final int id;
-  final String name;
-  final int countUserStar;
-  final String urlImageThumbnail;
-  final String urlImageDetail;
+  final String recipeId;
+  final String recipeName;
   final String description;
-  final List<String> countries;
-  final List<String> mealType;
-  final List<String> ingredients;
-  final List<String> nutritions;
-  final int calories;
-  final double rating;
+  final int calorie;
+  final int countUserStar;
+  final List<Nutrition> listNutritions;
+  final List<RecipeType> listRecipeTypes;
+  final List<Country> listCountries;
+  final List<Ingredient> listIngredients;
+  final ThumbnailImage thumbnailImage;
+  final DetailImage detailImage;
 
   RecipeDetailModel({
-    required this.id,
-    required this.name,
-    required this.countUserStar,
-    required this.urlImageThumbnail,
-    required this.urlImageDetail,
+    required this.recipeId,
+    required this.recipeName,
     required this.description,
-    required this.countries,
-    required this.mealType,
-    required this.ingredients,
-    required this.nutritions,
-    required this.calories,
-    required this.rating
+    required this.calorie,
+    required this.countUserStar,
+    required this.listNutritions,
+    required this.listRecipeTypes,
+    required this.listCountries,
+    required this.listIngredients,
+    required this.thumbnailImage,
+    required this.detailImage,
   });
 
-  static List<RecipeDetailModel> recipes = [
-    RecipeDetailModel(
-      id: 1, 
-      name: 'Pesto Pasta', 
-      countUserStar: 29, 
-      urlImageThumbnail: "assets/images/pesto_pasta.png", 
-      urlImageDetail: "assets/images/pesto_pasta_detail.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['Italian', 'Indonesian'], 
-      mealType: ['Lunch', 'Breakfast'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 150, 
-      rating: 4
-    ),
-    RecipeDetailModel(
-      id: 2, 
-      name: 'Lobster Bisque', 
-      countUserStar: 36, 
-      urlImageThumbnail: "assets/images/lobster_bisque.png", 
-      urlImageDetail: "assets/images/lobster_bisque.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['Malaysian', 'Indonesian'], 
-      mealType: ['Dinner'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 200, 
-      rating: 4
-    ),
-    RecipeDetailModel(
-      id: 3, 
-      name: 'Veggie Pizza', 
-      countUserStar: 29, 
-      urlImageThumbnail: "assets/images/veggie_pizza.png", 
-      urlImageDetail: "assets/images/veggie_pizza.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['UK', 'Indonesian'], 
-      mealType: ['Lunch', 'Dinner', 'Brunch', 'Breakfast'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 300, 
-      rating: 4
-    ),
-    RecipeDetailModel(
-      id: 4, 
-      name: 'Chocolate Muffin', 
-      countUserStar: 26, 
-      urlImageThumbnail: "assets/images/chocolate_muffin.png", 
-      urlImageDetail: "assets/images/chocolate_muffin.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['American', 'Indonesian'], 
-      mealType: ['Breakfast'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 250, 
-      rating: 4
-    ),
-    RecipeDetailModel(
-      id: 5, 
-      name: 'Capresse Salad', 
-      countUserStar: 29, 
-      urlImageThumbnail: "assets/images/caprese_salad.png", 
-      urlImageDetail: "assets/images/caprese_salad.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['Sweden', 'Indonesian'], 
-      mealType: ['Lunch', 'Dinner'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 50, 
-      rating: 4
-    ),
-    RecipeDetailModel(
-      id: 6, 
-      name: 'Pomodoro Pasta', 
-      countUserStar: 39, 
-      urlImageThumbnail: "assets/images/pesto_pasta_detail.png", 
-      urlImageDetail: "assets/images/pesto_pasta_detail.png", 
-      description: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.", 
-      countries: ['French', 'Indonesian'], 
-      mealType: ['Lunch'], 
-      ingredients: ['100g spaghetti', '1 pinch of salt'], 
-      nutritions: ['Fat', 'Protein', 'Vitamin A', 'Fiber'], 
-      calories: 100, 
-      rating: 4
-    ),
-  ];
+  factory RecipeDetailModel.fromJson(Map<String, dynamic> json) {
+    var listNutritionsFromJson = json['recipe']['listNutritions'] as List;
+    var listRecipeTypesFromJson = json['recipe']['listRecipeTypes'] as List;
+    var listCountriesFromJson = json['recipe']['listCountries'] as List;
+    var listIngredientsFromJson = json['recipe']['listIngredients'] as List;
+    
+
+    List<Nutrition> listNutritions = listNutritionsFromJson
+      .map((nutrition) => Nutrition.fromJson(nutrition))
+      .toList();
+
+    List<RecipeType> listRecipeTypes = listRecipeTypesFromJson
+      .map((recipeType) => RecipeType.fromJson(recipeType))
+      .toList();
+
+    List<Country> listCountries = listCountriesFromJson
+      .map((country) => Country.fromJson(country))
+      .toList();
+    log("ini dari recipe_detail_model $listCountries");
+
+    List<Ingredient> listIngredients = listIngredientsFromJson
+      .map((ingredient) => Ingredient.fromJson(ingredient))
+      .toList();
+
+    return RecipeDetailModel(
+      recipeId: json['recipe']['id'], 
+      recipeName: json['recipe']['recipeName'], 
+      description: json['recipe']['description'], 
+      calorie: json['recipe']['calorie'], 
+      countUserStar: json['recipe']['countUserStar'], 
+      listNutritions: listNutritions, 
+      listRecipeTypes: listRecipeTypes, 
+      listCountries: listCountries, 
+      listIngredients: listIngredients, 
+      thumbnailImage: ThumbnailImage.fromJson(json['thumbnailImage']), 
+      detailImage: DetailImage.fromJson(json['detailImage'])
+    );
+  }
+}
+
+class RecipeType {
+  final String id;
+  final String recipeTypeName;
+
+  RecipeType({required this.id, required this.recipeTypeName});
+
+  factory RecipeType.fromJson(Map<String, dynamic> json){
+    return RecipeType(
+      id: json['id'], 
+      recipeTypeName: json['recipeTypeName']
+    );
+  }
+
+  @override
+  String toString() {
+    return recipeTypeName;
+  }
+}
+
+class Country{
+  final String id;
+  final String countryName;
+
+  Country({required this.id, required this.countryName});
+
+  factory Country.fromJson(Map<String, dynamic> json){
+    return Country(
+      id: json['id'], 
+      countryName: json['countryName']
+    );
+  }
+
+  @override
+  String toString() {
+    return countryName;
+  }
+}
+
+class Ingredient{
+  final String id;
+  final String ingredientName;
+
+  Ingredient({required this.id, required this.ingredientName});
+
+  factory Ingredient.fromJson(Map<String, dynamic> json){
+    return Ingredient(
+      id: json['id'], 
+      ingredientName: json['ingredientName']
+    );
+  }
+
+  @override
+  String toString() {
+    return ingredientName.toString();
+  }
+}
+
+class DetailImage{
+  final String filename;
+  final String url;
+
+  DetailImage({required this.filename, required this.url});
+
+  factory DetailImage.fromJson(Map<String, dynamic> json){
+    return DetailImage(
+      filename: json['filename'], 
+      url: json['url']
+    );
+  }
 }

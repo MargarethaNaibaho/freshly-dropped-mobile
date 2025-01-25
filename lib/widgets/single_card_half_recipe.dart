@@ -30,7 +30,6 @@ class SingleCardHalfRecipe extends StatelessWidget {
         int dynamicNutritionsText = (constraints.maxWidth / 20).floor();
         int dynamicRecipeName = (constraints.maxWidth / 35).floor();
         log("$dynamicRecipeName");
-        log("ini nutritions text $dynamicNutritionsText");
 
         if(nutritionsText.length > dynamicNutritionsText){
           nutritionsText = '${nutritionsText.substring(0, dynamicNutritionsText)}...';
@@ -45,7 +44,7 @@ class SingleCardHalfRecipe extends StatelessWidget {
             Navigator.push(
               context, 
               MaterialPageRoute(
-                builder: (context) => IndividualRecipesScreen(id:1,)));
+                builder: (context) => IndividualRecipesScreen(id:hottestRecipe.recipeId)));
           },
           child: Container(
             width: widthForCard,
