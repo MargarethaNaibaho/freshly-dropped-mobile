@@ -83,25 +83,44 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       return Dismissible(
                         key: Key(recipe.recipeId.toString()), 
                         direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          setState(() {
-                            favoriteRecipes.removeAt(index);
-                          });
+                        onDismissed: (direction) async {
+                          try{
+                            await _favoriteService.toggleFavorite(recipe.recipeId);
+                            setState(() {
+                              favoriteRecipes.removeAt(index);
+                            });
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: CustomColors.primaryGreen,
-                              content: Text(
-                                "${recipe.recipeName} dihapus dari favoritmu", 
-                                style: TextStyle(
-                                  fontSize: 16 * MediaQuery.textScalerOf(context).scale(1), 
-                                  color: Colors.white
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: CustomColors.primaryGreen,
+                                content: Text(
+                                  "${recipe.recipeName} dihapus dari favoritmu", 
+                                  style: TextStyle(
+                                    fontSize: 16 * MediaQuery.textScalerOf(context).scale(1), 
+                                    color: Colors.white
+                                  ),
                                 ),
+                                duration: const Duration(seconds: 4),
+                                behavior: SnackBarBehavior.floating,
                               ),
-                              duration: const Duration(seconds: 4),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
+                            );
+                          } catch(e){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(
+                                  "Gagal hapus ${recipe.recipeName} dari favorite.",
+                                  style: TextStyle(
+                                    fontSize: 16 * MediaQuery.textScalerOf(context).scale(1), 
+                                    color: Colors.white
+                                  ),
+                                ),
+                                duration: const Duration(seconds: 4),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          }
+                          
                         },
                         background: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 28),
