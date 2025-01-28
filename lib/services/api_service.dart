@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = "http://192.168.100.81:8080/api/v1";
+  final String baseUrl = "http://192.168.100.3:8080/api/v1";
   final FlutterSecureStorage _storage = FlutterSecureStorage();
 
   final http.Client _client = http.Client();
