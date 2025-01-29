@@ -2,93 +2,61 @@ import 'dart:developer';
 
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:freshy_food/modoels/recipe_overview_model.dart';
+import 'package:freshy_food/notifier/favorite_notifier.dart';
 import 'package:freshy_food/screens/recipes/individual_recipes_screen.dart';
-import 'package:freshy_food/services/favorite_service.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
 import 'package:freshy_food/widgets/app_bar_white_with_plus.dart';
+import 'package:provider/provider.dart';
 
-class FavoritesScreen extends StatefulWidget {
+class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
 
   @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState();
-}
-
-class _FavoritesScreenState extends State<FavoritesScreen> {
-  late Future<List<RecipeOverviewModel>> _favoriteServiceFuture;
-
-  final FavoriteService _favoriteService = FavoriteService();
-  
-  @override
-  void initState() {
-    super.initState();
-    _favoriteServiceFuture = _loadFavoriteRecipes();
-  }
-
-  Future<List<RecipeOverviewModel>> _loadFavoriteRecipes() async{
-    try{
-      return await _favoriteService.getAllFavorites();
-    }
-    catch(e){
-      log("Failed to load favorites: iyakah $e");
-      return [];
-    }
-  }
-
-  bool willBeDeleted = false;
-
-  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints){
-        double widthForOuterCard = constraints.maxWidth - 48;
-        bool isTooSmall = constraints.maxWidth < 600;
+    return ChangeNotifierProvider(
+      create: (context) => FavoriteNotifier()..loadFavoriteRecipes(),
+      child: LayoutBuilder(
+        builder: (context, constraints){
+          double widthForOuterCard = constraints.maxWidth - 48;
+          bool isTooSmall = constraints.maxWidth < 600;
 
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBarWhiteWithPlus(linkBack: (context){
-            Navigator.pushAndRemoveUntil(
-              context, 
-              MaterialPageRoute(builder: (context) => BottomAppBar()),
-              (Route<dynamic> route) => false,
-            );
-          }, 
-            linkAdd: (){
-              log("Ini tombol tambah diklik");
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBarWhiteWithPlus(linkBack: (context){
+              Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(builder: (context) => BottomAppBar()),
+                (Route<dynamic> route) => false,
+              );
             }, 
-            title: "Favorites"
-          ),
-          body: SafeArea(
-            minimum: EdgeInsets.zero,
-            child: FutureBuilder<List<RecipeOverviewModel>>(
-              future: _favoriteServiceFuture, 
-              builder: (context, snapshot){
-                if(snapshot.connectionState == ConnectionState.waiting){
-                  return Center(child: CircularProgressIndicator(),);
-                } else if(snapshot.hasError){
-                  return Center(child: Text("Error: ${snapshot.error}"),);
-                } else if(snapshot.data == null || snapshot.data!.isEmpty){
-                  return Center(child: Text("No favorites found"),);
-                } else{
-                  final favoriteRecipes = snapshot.data!;
-
+              linkAdd: (){
+                log("Ini tombol tambah diklik");
+              }, 
+              title: "Favorites"
+            ),
+            body: SafeArea(
+              minimum: EdgeInsets.zero,
+              child: Consumer<FavoriteNotifier>(
+                builder: (context, favoriteNotifier, child){
+                  if(favoriteNotifier.isLoading){
+                    return const Center(child: CircularProgressIndicator(),);
+                  } else if(favoriteNotifier.favoriteRecipes.isEmpty){
+                    return const Center(child: Text("No favorites found"),);
+                  }
+                  
                   return ListView.builder(
-                    itemCount: favoriteRecipes.length,
+                    itemCount: favoriteNotifier.favoriteRecipes.length,
                     itemBuilder: (context, index){
-                      final recipe = favoriteRecipes[index];
+                      final recipe = favoriteNotifier.favoriteRecipes[index];
 
                       return Dismissible(
-                        key: Key(recipe.recipeId.toString()), 
+                        key: Key(recipe.recipeId.toLowerCase()), 
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) async {
                           try{
-                            await _favoriteService.toggleFavorite(recipe.recipeId);
-                            setState(() {
-                              favoriteRecipes.removeAt(index);
-                            });
+                            await favoriteNotifier.toggleFavorite(recipe.recipeId);
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -214,11 +182,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     }
                   );
                 }
-              }
+              ),
             ),
-          ),
-        );
-      }
+          );
+        }
+      )
     );
   }
 }
