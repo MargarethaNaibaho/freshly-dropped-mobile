@@ -42,6 +42,31 @@ class FavoritesScreen extends StatelessWidget {
                 builder: (context, favoriteNotifier, child){
                   if(favoriteNotifier.isLoading){
                     return const Center(child: CircularProgressIndicator(),);
+                  } else if(favoriteNotifier.errorMessage != null){
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.warning, color: Colors.red, size: 48,),
+                          const SizedBox(height: 8,),
+                          Text(
+                            favoriteNotifier.errorMessage!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16 * MediaQuery.textScalerOf(context).scale(1),
+                              color: Colors.red,
+                            ),
+                          ),
+                          const SizedBox(height: 12,),
+                          ElevatedButton(
+                            onPressed: (){
+                              favoriteNotifier.loadFavoriteRecipes();
+                            }, 
+                            child: const Text("Coba lagi"),
+                          ),
+                        ],
+                      ),
+                    );
                   } else if(favoriteNotifier.favoriteRecipes.isEmpty){
                     return const Center(child: Text("No favorites found"),);
                   }
@@ -60,9 +85,13 @@ class FavoritesScreen extends StatelessWidget {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                backgroundColor: CustomColors.primaryGreen,
+                                backgroundColor: favoriteNotifier.errorMessage != null 
+                                  ? Colors.red 
+                                  : CustomColors.primaryGreen,
                                 content: Text(
-                                  "${recipe.recipeName} dihapus dari favoritmu", 
+                                  favoriteNotifier.errorMessage != null 
+                                  ? "${recipe.recipeName} GAGAL dihapus dari favoritmu"
+                                  : "${recipe.recipeName} dihapus dari favoritmu", 
                                   style: TextStyle(
                                     fontSize: 16 * MediaQuery.textScalerOf(context).scale(1), 
                                     color: Colors.white

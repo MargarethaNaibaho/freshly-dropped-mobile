@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:freshy_food/modoels/recipe_detail_model.dart';
 import 'package:freshy_food/modoels/recipe_overview_model.dart';
@@ -10,7 +12,7 @@ class RecipeNotifier extends ChangeNotifier{
 
   List<RecipeOverviewModel> _listRecipes = [];
   bool _isLoading = false;
-  String _errorMessage = '';
+  String? _errorMessage;
 
   late Future<RecipeDetailModel> recipeDetail;
   bool isFavorite = false;
@@ -18,36 +20,51 @@ class RecipeNotifier extends ChangeNotifier{
 
   List<RecipeOverviewModel> get listRecipes => _listRecipes;
   bool get isLoading => _isLoading;
-  String get errorMessage => _errorMessage;
+  String? get errorMessage => _errorMessage;
 
   void initialize(String recipeId){
+    _errorMessage = null;
+     notifyListeners();
+     log("di sini salah $errorMessage");
     recipeDetail = _recipeService.getRecipeById(recipeId);
     _checkFavoriteStatus(recipeId);
   }
 
   Future<void> _checkFavoriteStatus(String recipeId) async{
-    isFavorite = await _favoriteService.isFavorite(recipeId);
+    _errorMessage = null;
+     notifyListeners();
+     log("di sini salah $errorMessage");
+    try{
+      log("di sini salah dalam try $errorMessage");
+      isFavorite = await _favoriteService.isFavorite(recipeId);
+    } catch(e){
+      _errorMessage = "Gagal mengambil data. Periksa koneksi internet Anda";
+      notifyListeners();
+    }
     notifyListeners();
   }
 
   Future<void> toggleFavorite(String recipeId) async{
+    _errorMessage = null;
     try{
       await _favoriteService.toggleFavorite(recipeId);
       isFavorite = !isFavorite;
       notifyListeners();
     } catch(e){
-      throw Exception("Unable to toggle favorite status");
+      _errorMessage = "Gagal menghubungkan. Periksa koneksi internet Anda";
+      notifyListeners();
     }
   }
 
   Future<void> loadAllRecipes() async{
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
     try{
       _listRecipes = await _recipeService.getRecipes();
-      _errorMessage = '';
     } catch(e){
-      _errorMessage = 'Failed to load favorites';
+      _errorMessage = 'Gagal mendapatkan resep. Pastikan koneksi internet Anda';
+      notifyListeners();
     }
 
     _isLoading = false;
@@ -55,11 +72,13 @@ class RecipeNotifier extends ChangeNotifier{
   }
 
   void incrementCounter(){
+    _errorMessage = null;
     counter++;
     notifyListeners();
   }
 
   void decrementCounter(){
+    _errorMessage = null;
     if(counter > 1){
       counter--;
       notifyListeners();

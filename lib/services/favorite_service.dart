@@ -41,7 +41,7 @@ class FavoriteService{
         await _apiService.post(endpoint, {});
       }
     } catch(e){
-      throw("Error in toggle Favorite: $e");
+      throw Exception("Error in toggle Favorite: $e");
     }
   }
 

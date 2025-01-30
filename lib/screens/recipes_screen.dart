@@ -40,6 +40,31 @@ class _RecipesScreenState extends State<RecipesScreen>{
             builder: (context, recipeNotifier, child){
               if(recipeNotifier.isLoading){
                 return const Center(child: CircularProgressIndicator());
+              } else if(recipeNotifier.errorMessage != null){
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.warning, color: Colors.red, size: 48,),
+                      const SizedBox(height: 8,),
+                      Text(
+                        recipeNotifier.errorMessage!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16 * MediaQuery.textScalerOf(context).scale(1),
+                          color: Colors.red,
+                        ),
+                      ),
+                      const SizedBox(height: 12,),
+                      ElevatedButton(
+                        onPressed: (){
+                          recipeNotifier.loadAllRecipes();
+                        }, 
+                        child: const Text("Coba lagi"),
+                      ),
+                    ],
+                  ),
+                );
               } else if(recipeNotifier.listRecipes.isEmpty){
                 return const Center(child: Text("No recipes found"));
               }

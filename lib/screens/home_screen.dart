@@ -3,93 +3,116 @@ import 'dart:developer';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:freshy_food/modoels/recipe_overview_model.dart';
-import 'package:freshy_food/services/recipe_service.dart';
+import 'package:freshy_food/notifier/recipe_notifier.dart';
 import 'package:freshy_food/styles/colors.dart';
 import 'package:freshy_food/styles/path/image_path.dart';
 import 'package:freshy_food/styles/text_styles.dart';
 import 'package:freshy_food/widgets/home_icon.dart';
 import 'package:freshy_food/widgets/single_card_half_recipe.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final RecipeService recipeService = RecipeService();
-    
-
     // bool isTooSmall = MediaQuery.sizeOf(context).width < 600;
     log("${MediaQuery.sizeOf(context).width}");
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: CustomColors.lightGreen,
-        toolbarHeight: 86,
-        title: Container(
-          padding: const EdgeInsets.symmetric(vertical: 21, horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image(image: AssetImage(ImagePath.logo), height: 46,),
-              const SizedBox(width: 10,),
-              Expanded(
-                child: 
-                GestureDetector(
-                onTap: (){},
-                child:  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Pesto Pasta",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            color: CustomColors.searchGrey,
-                            fontSize: 15 * MediaQuery.textScalerOf(context).scale(1)
+    return ChangeNotifierProvider(
+      create: (context) => RecipeNotifier()..loadAllRecipes(),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: CustomColors.lightGreen,
+          toolbarHeight: 86,
+          title: Container(
+            padding: const EdgeInsets.symmetric(vertical: 21, horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image(image: AssetImage(ImagePath.logo), height: 46,),
+                const SizedBox(width: 10,),
+                Expanded(
+                  child: 
+                  GestureDetector(
+                  onTap: (){},
+                  child:  Container(
+                      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Pesto Pasta",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              color: CustomColors.searchGrey,
+                              fontSize: 15 * MediaQuery.textScalerOf(context).scale(1)
+                            ),
                           ),
-                        ),
-                        Icon(
-                          FluentSystemIcons.ic_fluent_search_regular,
-                          size: 27,
-                          color: CustomColors.searchGrey,
-                        )
-                      ],
+                          Icon(
+                            FluentSystemIcons.ic_fluent_search_regular,
+                            size: 27,
+                            color: CustomColors.searchGrey,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ),
-              const SizedBox(width: 10,),
-              InkWell(
-                onTap: (){}, 
-                child: Icon(
-                  Icons.shopping_cart_outlined, 
-                  size: 27, 
-                  color: Colors.white,
+                  )
                 ),
-              ),
-            ],
+                const SizedBox(width: 10,),
+                InkWell(
+                  onTap: (){}, 
+                  child: Icon(
+                    Icons.shopping_cart_outlined, 
+                    size: 27, 
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        minimum: EdgeInsets.zero,
-        child: FutureBuilder<List<RecipeOverviewModel>>(
-          future: recipeService.getRecipes(), 
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.waiting){
-              return Center(child: CircularProgressIndicator(),);
-            } else if(snapshot.hasError){
-              return Center(child: Text('Error: ${snapshot.error}'),);
-            } else if(!snapshot.hasData || snapshot.data!.isEmpty){
-              return Center(child: Text("No recipes available"),);
-            } else{
-              final List<RecipeOverviewModel> hottestRecipe = snapshot.data!.take(2).toList();
+        body: SafeArea(
+          minimum: EdgeInsets.zero,
+          child: Consumer<RecipeNotifier>(
+            builder: (context, recipeNotifier, child){
+              if(recipeNotifier.isLoading){
+                return const Center(child: CircularProgressIndicator(),);
+              } else if(recipeNotifier.errorMessage != null){
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.warning, color: Colors.red, size: 48,),
+                      const SizedBox(height: 8,),
+                      Text(
+                        recipeNotifier.errorMessage!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16 * MediaQuery.textScalerOf(context).scale(1),
+                          color: Colors.red,
+                        ),
+                      ),
+                      const SizedBox(height: 12,),
+                      ElevatedButton(
+                        onPressed: (){
+                          recipeNotifier.loadAllRecipes();
+                        }, 
+                        child: const Text("Coba lagi"),
+                      ),
+                    ],
+                  ),
+                );
+              } else if(recipeNotifier.listRecipes.isEmpty){
+                return const Center(child: Text("No recipes found"),);
+              }
+
+              final List<RecipeOverviewModel> hottestRecipe = recipeNotifier.listRecipes.take(2).toList();
               return ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 13),    
                 children: [
@@ -177,37 +200,37 @@ class HomeScreen extends StatelessWidget {
                 ],
               );
             }
-          }
+          ),
         ),
-      ),
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            right: 0,
-            // top: MediaQuery.sizeOf(context).height * 0.65,
-            bottom: MediaQuery.sizeOf(context).height > 360 
-              ? MediaQuery.sizeOf(context).height * 0.1 
-              : MediaQuery.of(context).padding.bottom,
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: FloatingActionButton(
-                backgroundColor: CustomColors.primaryGreen,
-                onPressed: (){},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-                tooltip: "Chat",
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 20),
-                  child: Icon(
-                    FluentSystemIcons.ic_fluent_chat_filled, 
-                    size: 41, 
-                    color: Colors.white,
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              // top: MediaQuery.sizeOf(context).height * 0.65,
+              bottom: MediaQuery.sizeOf(context).height > 360 
+                ? MediaQuery.sizeOf(context).height * 0.1 
+                : MediaQuery.of(context).padding.bottom,
+              child: SizedBox(
+                width: 80,
+                height: 80,
+                child: FloatingActionButton(
+                  backgroundColor: CustomColors.primaryGreen,
+                  onPressed: (){},
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                  tooltip: "Chat",
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 20),
+                    child: Icon(
+                      FluentSystemIcons.ic_fluent_chat_filled, 
+                      size: 41, 
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

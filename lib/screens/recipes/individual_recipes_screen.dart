@@ -39,7 +39,7 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBarGreen(
-          linkBack: (context) => Navigator.pop(context), 
+          linkBack:  (context) => Navigator.pop(context), 
           linkRight: (){}, 
           focusNode: _focusNode,
           isCart: true,
@@ -55,11 +55,29 @@ class _IndividualRecipesScreenState extends State<IndividualRecipesScreen> {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  } else if(snapshot.hasError){
-                    log("${snapshot.stackTrace}");
+                  }  else if(recipeNotifier.errorMessage != null){
                     return Center(
-                      child: Text(
-                        "Gagal menampilkan resep. Coba ulang lagi nanti"
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.warning, color: Colors.red, size: 48,),
+                          const SizedBox(height: 8,),
+                          Text(
+                            recipeNotifier.errorMessage!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16 * MediaQuery.textScalerOf(context).scale(1),
+                              color: Colors.red,
+                            ),
+                          ),
+                          const SizedBox(height: 12,),
+                          ElevatedButton(
+                            onPressed: (){
+                              recipeNotifier.initialize(widget.id);
+                            }, 
+                            child: const Text("Coba lagi"),
+                          ),
+                        ],
                       ),
                     );
                   } else if(!snapshot.hasData){
